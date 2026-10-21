@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Alcans | Central Operacional</title>
+  <link rel="stylesheet" href="css/style.css"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" defer></script><script src="js/supabase.js" defer></script><script src="js/script.js" defer></script>
+</head>
+<body>
+  <main id="login-view" class="login-layout">
+    <section class="brand-panel" aria-label="Apresentação Alcans">
+      <canvas id="constellations" aria-hidden="true"></canvas>
+      <div class="brand-content">
+        <img class="brand-logo" src="assets/logo-alcans.png" alt="Alcans" id="brand-logo">
+        <p class="brand-subtitle">PORTAL DO ATENDENTE</p><span class="brand-divider"></span>
+        <p class="brand-message">Internet conecta aparelhos<br>Um bom atendimento <strong>conecta pessoas</strong></p>
+      </div>
+    </section>
+    <section class="form-panel"><div class="login-card">
+      <h1>Bem-vindo</h1><p class="intro">Entre com suas credenciais para acessar o portal.</p>
+      <form id="login-form">
+        <label for="usuario">Usuário</label><div class="input-wrap"><span class="input-icon">✉</span><input id="usuario" type="email" placeholder="seu.email@alcans.com.br" autocomplete="username" required></div>
+        <label for="senha">Senha</label><div class="input-wrap"><span class="input-icon">♙</span><input id="senha" type="password" placeholder="Digite sua senha" autocomplete="current-password" required><button id="toggle-password" class="eye-button" type="button" aria-label="Mostrar senha">◉</button></div>
+        <div class="form-options"><label class="remember"><input id="lembrar" type="checkbox"> Lembrar meu usuário</label><a href="#" id="forgot-password">Esqueci minha senha</a></div>
+        <button class="submit-button" type="submit">Entrar <span>→</span></button><p id="form-feedback" class="feedback" role="status"></p>
+      </form>
+      <form id="recovery-form" hidden>
+        <h2>Definir nova senha</h2>
+        <p class="intro">Crie uma senha com pelo menos 12 caracteres.</p>
+        <label for="new-password">Nova senha</label>
+        <div class="input-wrap"><input id="new-password" type="password" autocomplete="new-password" minlength="12" required></div>
+        <label for="confirm-password">Confirmar nova senha</label>
+        <div class="input-wrap"><input id="confirm-password" type="password" autocomplete="new-password" minlength="12" required></div>
+        <button class="submit-button" type="submit">Salvar nova senha</button>
+        <p id="recovery-feedback" class="feedback" role="status"></p>
+      </form>
+    </div></section>
+  </main>
+
+</body>
+</html>

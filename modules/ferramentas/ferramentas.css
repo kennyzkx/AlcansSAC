@@ -1,0 +1,123 @@
+.tool-page{padding:28px clamp(18px,3vw,46px) 60px;max-width:1550px;margin:auto;color:#edf1f7}.tool-page[hidden],.tool-panel[hidden],.tool-fields[hidden],.tool-result[hidden]{display:none!important}.tool-heading{padding:27px 30px;margin-bottom:22px;background:linear-gradient(120deg,rgba(255,101,0,.10),rgba(18,27,41,.92) 52%,rgba(15,48,60,.23));border:1px solid rgba(132,151,172,.16);border-radius:15px}.tool-heading h1{font-size:28px;letter-spacing:-.6px;margin:7px 0}.tool-heading p,.tool-panel-heading p{color:#91a0b2;font-size:13px;margin:5px 0}.tool-kicker{color:#ff6500;font-size:10px;font-weight:800;letter-spacing:1.8px}.tool-panel{padding:27px;background:rgba(17,25,37,.90);border:1px solid #283446;border-radius:15px;margin-bottom:20px;box-shadow:0 12px 30px rgba(0,0,0,.10)}.tool-panel-heading{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:24px}.tool-panel-heading h2{font-size:19px;letter-spacing:-.3px}.tool-pill{color:#ff6500;border:1px solid rgba(255,101,0,.25);background:rgba(255,101,0,.08);font-size:10px;font-weight:700;border-radius:20px;padding:8px 12px;white-space:nowrap}.tool-tabs,.tool-switch,.tool-actions{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}.tool-tab,.tool-switch button{background:#141d2b;border:1px solid #2c3a4d;border-radius:9px;padding:13px 18px;color:#9ba9ba;cursor:pointer;font-weight:700}.tool-tab.active,.tool-switch button.active{border-color:#ff6500;background:rgba(255,101,0,.11);color:#fff}.tool-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-bottom:19px}.tool-fields label{display:flex;flex-direction:column;gap:9px;color:#d9e1ed;font-size:12px;font-weight:650}.tool-fields input,.tool-panel>input,.tool-date-edit{background:#0d1521;border:1px solid #344153;border-radius:8px;color:#eaf0f7;padding:12px 13px;outline:none;min-width:0}.tool-fields input:focus,.tool-panel>input:focus,.tool-date-edit:focus{border-color:#ff6500;box-shadow:0 0 0 3px rgba(255,101,0,.10)}.tool-panel>input{width:100%;margin-bottom:18px}.tool-primary,.tool-secondary{display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;border-radius:9px;padding:12px 18px;font-size:12px;font-weight:800}.tool-primary{background:#ff6500;color:#fff;border:1px solid #ff6500}.tool-primary:hover{background:#ff7826}.tool-primary:disabled{opacity:.35;cursor:not-allowed}.tool-secondary{background:#151f2d;border:1px solid #344153;color:#dce4ee}.tool-secondary:hover{border-color:#ff6500}.tool-result{background:linear-gradient(120deg,#111c2b,#0d1520);border:1px solid rgba(255,101,0,.27);padding:24px;border-radius:12px;margin-top:23px}.tool-big-number{color:#ff6500;font-size:clamp(30px,5vw,48px);font-weight:850;margin:8px 0}.tool-result p,.tool-summary{font-size:13px;color:#b6c1d0;margin:12px 0}.tool-summary{padding:14px;background:#0b121d;border-radius:8px}.tool-fine-row{display:flex;justify-content:space-between;gap:18px;border-bottom:1px solid #263243;padding:14px 6px;font-size:13px}.tool-fine-row strong{color:#ff6500;white-space:nowrap}.tool-hint{color:#9eabba;font-size:12px}.tool-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:20px}.tool-kpis article{background:#111b29;border:1px solid #2a3545;border-radius:13px;padding:21px}.tool-kpis span,.tool-kpis small{display:block;color:#92a1b3;font-size:10px;letter-spacing:.5px}.tool-kpis strong{display:block;color:#ff6500;font-size:clamp(23px,3vw,35px);margin:11px 0}.tool-table-wrap{overflow-x:auto}.tool-table{width:100%;border-collapse:collapse;min-width:710px}.tool-table th{text-align:left;color:#91a0b2;background:#101824;font-size:10px;letter-spacing:1px;padding:13px}.tool-table td{border-top:1px solid #2b3545;padding:10px 13px;font-size:12px}.tool-date-edit{width:100%;font-size:12px}.tool-maximum{color:#ff6c62;font-weight:800}.tool-delete{border:1px solid #603637;color:#ff9a92;background:transparent;border-radius:7px;padding:8px 10px;cursor:pointer}.tool-empty{text-align:center;color:#9aabba;padding:40px!important}.tool-upload{position:relative}.tool-page .tool-panel-heading .tool-primary{white-space:nowrap}@media(max-width:700px){.tool-page{padding:17px 13px}.tool-panel{padding:18px}.tool-kpis{grid-template-columns:1fr}.tool-panel-heading{align-items:flex-start;flex-direction:column}.tool-heading{padding:22px}}
+/* Ferramentas acima de Administração; somente a tela ativa recebe destaque. */
+#dynamic-main-nav .sidebar-admin-group{display:block}
+#dynamic-main-nav .sidebar-admin-toggle[aria-expanded="true"]:not(.active){background:transparent;border-color:transparent;box-shadow:none}
+#dynamic-main-nav .sidebar-submenu:not(.is-open){visibility:hidden}
+
+
+/* ALCANS / FERRAMENTAS — REFINAMENTO CORPORATIVO */
+.tool-page{max-width:1530px;padding:34px clamp(20px,3.5vw,58px) 90px;font-family:inherit}
+.tool-heading{position:relative;isolation:isolate;overflow:hidden;min-height:150px;display:flex;align-items:center;padding:34px 40px;margin-bottom:26px;border:1px solid rgba(147,166,190,.16);border-radius:18px;background:linear-gradient(110deg,rgba(19,30,44,.96) 0%,rgba(15,25,39,.92) 65%,rgba(15,42,53,.74) 100%);box-shadow:0 22px 60px rgba(0,0,0,.12)}
+.tool-heading:before{content:"";position:absolute;right:-45px;top:-95px;width:370px;height:280px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,101,0,.17),transparent 68%);pointer-events:none;z-index:-1}
+.tool-heading:after{content:"";position:absolute;right:45px;top:20px;width:140px;height:140px;border:1px solid rgba(255,101,0,.15);border-radius:50%;box-shadow:0 0 0 27px rgba(255,101,0,.027),0 0 0 54px rgba(255,101,0,.018);pointer-events:none;z-index:-1}
+.tool-heading h1{font-size:clamp(27px,3vw,37px);font-weight:800;letter-spacing:-1.15px;margin:10px 0}
+.tool-heading p{font-size:13px;line-height:1.6;max-width:640px;color:#aab6c7}
+.tool-kicker{font-size:10px;letter-spacing:2px}
+.tool-workspace{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.tool-tabs{margin:0;gap:4px;padding:5px;border:1px solid #2a384b;border-radius:12px;background:#0d1622}
+.tool-tab{border:0;background:transparent;padding:12px 22px;border-radius:8px;color:#93a4b8;font-size:12px;transition:background .2s,color .2s}
+.tool-tab.active{border:0;background:#263344;color:#fff;box-shadow:inset 0 -2px 0 #ff6500,0 3px 9px rgba(0,0,0,.15)}
+.tool-workspace-note{font-size:11px;color:#899bae;display:flex;align-items:center;gap:9px}
+.tool-status-dot{display:inline-block;flex:none;width:7px;height:7px;border-radius:50%;background:#ff6500;box-shadow:0 0 0 4px rgba(255,101,0,.11)}
+.tool-panel{background:linear-gradient(155deg,rgba(20,31,46,.96),rgba(14,23,35,.97));border:1px solid #2b3a4c;border-radius:16px;padding:30px 34px;margin-bottom:22px;box-shadow:0 18px 45px rgba(0,0,0,.12)}
+.tool-panel-heading{margin-bottom:29px;padding-bottom:22px;border-bottom:1px solid rgba(147,166,190,.12)}
+.tool-panel-heading h2{font-size:19px;font-weight:760;letter-spacing:-.4px;margin-bottom:7px}
+.tool-panel-heading p{font-size:12px;line-height:1.6;color:#9eacbc}
+.tool-pill{border-radius:7px;padding:8px 12px;letter-spacing:.8px;font-size:9px}
+.tool-section-caption{font-size:10px;letter-spacing:1.5px;font-weight:800;color:#8394a9;margin:7px 0 15px}
+.tool-switch{gap:12px;margin-bottom:29px}
+.tool-switch button{flex:1;min-width:180px;text-align:left;padding:19px 22px;background:#0d1826;border:1px solid #2b3b4e;border-radius:11px;color:#becbd9;font-size:13px;transition:all .2s}
+.tool-switch button.active{border-color:rgba(255,101,0,.85);background:linear-gradient(110deg,rgba(255,101,0,.15),rgba(255,101,0,.035));box-shadow:inset 3px 0 0 #ff6500;color:#fff}
+.tool-fields{gap:18px;margin-bottom:24px}
+.tool-fields label{gap:10px;color:#c5d1df;font-size:12px}
+.tool-fields input,.tool-panel>input,.tool-date-edit{min-height:47px;background:#0a1420;border:1px solid #334357;border-radius:9px;color:#f1f5f9;font-size:13px;transition:border-color .2s,box-shadow .2s}
+.tool-fields input:hover,.tool-date-edit:hover{border-color:#53657b}
+.tool-primary,.tool-secondary{min-height:44px;padding:12px 20px;font-size:12px;border-radius:9px;transition:all .2s}
+.tool-primary{background:#ff6500;box-shadow:0 5px 15px rgba(255,101,0,.14)}
+.tool-primary:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(255,101,0,.19)}
+.tool-secondary{background:#182638;border-color:#3b4d63}
+.tool-result{position:relative;overflow:hidden;background:linear-gradient(120deg,#0b1827,#102338);border:1px solid rgba(255,101,0,.33);border-left:3px solid #ff6500;padding:26px 30px;border-radius:12px}
+.tool-big-number{font-size:clamp(37px,5vw,53px);letter-spacing:-1.8px}
+.tool-summary{border:1px solid #2c4055;padding:17px;background:#0b1827;line-height:1.65}
+.tool-panel-footnote{font-size:11px;color:#7e91a6;line-height:1.6;margin-top:23px;padding-top:17px;border-top:1px solid rgba(147,166,190,.10)}
+.tool-fine-row{padding:17px 14px;align-items:center;border-bottom:1px solid #293a4d}
+.tool-fine-row:nth-child(even){background:rgba(255,255,255,.018)}
+.tool-fine-row strong{font-size:14px}
+.tool-process{display:flex;align-items:center;gap:18px;margin:4px 0 25px;padding:0 8px}
+.tool-process-step{display:flex;align-items:center;gap:11px;white-space:nowrap;color:#a5b3c4;font-size:11px;font-weight:650}
+.tool-process-step b{display:grid;place-items:center;width:31px;height:31px;border:1px solid rgba(255,101,0,.36);background:rgba(255,101,0,.09);color:#ff7927;border-radius:9px;font-size:11px}
+.tool-process-line{flex:1;height:1px;background:linear-gradient(90deg,#3e4e61,#243246)}
+.tool-import-panel .tool-fields{grid-template-columns:1.5fr 1fr 1fr}
+.tool-actions{margin:4px 0 15px;align-items:center}
+.tool-hint{font-size:11px;color:#8699af;line-height:1.6}
+.tool-metrics-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:26px 0 12px}
+.tool-metrics-title .tool-section-caption{margin:0}
+.tool-metrics-desc{font-size:11px;color:#8393a6}
+.tool-kpis{gap:15px;margin-bottom:25px}
+.tool-kpis article{position:relative;overflow:hidden;min-height:138px;background:linear-gradient(145deg,#162539,#101c2b);border:1px solid #2e4054;border-radius:13px;padding:24px 25px}
+.tool-kpis article:after{content:"";position:absolute;right:0;top:0;width:70px;height:2px;background:linear-gradient(90deg,transparent,#ff6500)}
+.tool-kpis article:first-child{border-color:rgba(255,101,0,.37)}
+.tool-kpis span{font-size:10px;letter-spacing:1.1px;font-weight:750}
+.tool-kpis strong{font-size:clamp(26px,3vw,38px);letter-spacing:-.7px;margin:13px 0 10px}
+.tool-kpis small{font-size:11px;letter-spacing:0}
+.tool-table-caption{display:flex;align-items:center;gap:11px;background:#101d2b;padding:15px 17px;border:1px solid #2b3c50;border-radius:10px 10px 0 0;font-size:11px;font-weight:750;color:#c5d1de}
+.tool-table-hint{margin-left:auto;font-weight:400;color:#8295aa}
+.tool-table-wrap{border:1px solid #2b3c50;border-top:0;border-radius:0 0 10px 10px;overflow-x:auto}
+.tool-table th{background:#111e2d;padding:16px 15px;font-size:10px;letter-spacing:1.15px}
+.tool-table td{padding:12px 15px;border-top:1px solid #29394c}
+.tool-table tbody tr:hover{background:rgba(255,255,255,.018)}
+.tool-delete{padding:9px 14px;border-radius:8px}
+@media(max-width:900px){.tool-import-panel .tool-fields{grid-template-columns:1fr 1fr}.tool-import-panel .tool-fields label:first-child{grid-column:1/-1}.tool-process{gap:10px}.tool-process-step{font-size:10px}}
+@media(max-width:700px){.tool-page{padding:18px 13px 60px}.tool-heading{padding:26px 23px;min-height:135px}.tool-heading:after{right:-80px}.tool-panel{padding:22px 18px}.tool-import-panel .tool-fields{grid-template-columns:1fr}.tool-import-panel .tool-fields label:first-child{grid-column:auto}.tool-workspace-note{padding-left:4px}.tool-switch button{min-width:100%}.tool-kpis{grid-template-columns:1fr}.tool-kpis article{min-height:112px}.tool-process{gap:7px}.tool-process-step{gap:5px;font-size:9px}.tool-process-step b{width:26px;height:26px}.tool-table-hint,.tool-metrics-desc{display:none}}
+
+/* ALCANS | PADRÃO ÚNICO — espelha a linguagem visual da Administração */
+.tool-page{max-width:1350px;padding:26px 28px 60px;margin:auto}
+.tool-heading{display:block;min-height:0;isolation:isolate;overflow:hidden;padding:27px 30px;margin:8px 0 18px;border:1px solid #303641;border-radius:23px;background:radial-gradient(ellipse 70% 130% at 0% 0%,rgba(255,101,0,.10),transparent 72%),radial-gradient(ellipse 80% 140% at 100% 0%,rgba(255,101,0,.055),transparent 70%),linear-gradient(115deg,#151d29,#101721 55%,#1a1717);box-shadow:0 18px 45px rgba(0,0,0,.17)}
+.tool-heading::before{content:'ALCANS  /  FERRAMENTAS';display:block;position:static;width:auto;height:auto;border:0;border-radius:0;box-shadow:none;background:none;color:#ff8a24;font-size:10px;font-weight:800;letter-spacing:2px;margin-bottom:12px;pointer-events:none}
+.tool-heading::after{content:none;display:none}
+.tool-heading .tool-kicker{display:block;color:#c87c43;font-size:10px;font-weight:800;letter-spacing:1.2px;margin:0 0 12px}
+.tool-heading h1{font-size:clamp(25px,2.5vw,34px);font-weight:800;letter-spacing:-.7px;color:#f6f7f9;margin:0 0 10px}
+.tool-heading p{color:#9aa8b9;font-size:14px;line-height:1.6;max-width:none;margin:0}
+.tool-panel{background:#141c27;border:1px solid #303641;border-radius:16px;box-shadow:0 12px 35px rgba(0,0,0,.10)}
+.tool-kpis article{background:linear-gradient(145deg,#19222e,#111923);border-color:#303b49}
+.tool-kpis article::after{opacity:.6}
+.tool-process{margin:6px 0 22px;padding:0 4px}
+.tool-process-step b{border-color:#4c3528;background:#251b18;color:#ff8a24}
+.tool-process-line{background:#28313d}
+.tool-tab.active{background:#242b35;box-shadow:inset 0 -2px 0 #ff6500}
+@media(max-width:700px){.tool-page{padding:18px 12px 35px}.tool-heading{padding:21px 18px;border-radius:16px;min-height:0}}
+
+/* ALCANS | Tipografia e cores idênticas ao módulo Administração */
+.tool-page{color:#e8edf5}
+.tool-heading{color:#e8edf5}
+.tool-heading::before{color:#ff8a24}
+.tool-heading .tool-kicker{color:#d27946;font-size:10px;font-weight:800;letter-spacing:.16em}
+.tool-heading h1{color:#f6f7f9}
+.tool-heading p{color:#9aa8b9;font-size:14px;line-height:1.6}
+.tool-panel-heading h2{color:#f4f5f8;font-size:19px;font-weight:750;letter-spacing:-.3px}
+.tool-panel-heading p,.tool-hint,.tool-metrics-desc{color:#9daabc}
+.tool-fields label{color:#b9c3d0;font-size:13px}
+.tool-fields input,.tool-panel>input,.tool-date-edit{color:#f0f4f9}
+.tool-tab,.tool-switch button{color:#c6cfda}
+.tool-table th,.tool-table-hint,.tool-section-caption{color:#9daabc}
+.tool-table td{color:#e8edf5}
+.tool-kpis span,.tool-kpis small{color:#a1a8b4}
+.tool-fine-row{color:#e8edf5}
+@media(max-width:700px){.tool-heading p{font-size:14px}}
+
+/* Consulta de MAC — mesmos componentes e tipografia do painel Alcans */
+.mac-panel .tool-panel-heading{margin-bottom:25px}
+.mac-form{display:grid;gap:10px}.mac-form>label{color:#b9c3d0;font-size:13px;font-weight:650}
+.mac-input-row{display:flex;gap:12px}.mac-input-row input{flex:1;min-width:0;min-height:47px;background:#0a1420;border:1px solid #334357;border-radius:9px;color:#f1f5f9;padding:12px 14px;font-size:15px;letter-spacing:.07em;outline:0}
+.mac-input-row input:focus{border-color:#ff6500;box-shadow:0 0 0 3px rgba(255,101,0,.10)}
+.mac-status{margin-top:20px;color:#9daabc;font-size:12px;min-height:18px}
+#mac-result{margin-top:18px;background:#101924;border:1px solid #303641;border-radius:12px;padding:24px}
+#mac-result[hidden]{display:none}.mac-result-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;border-bottom:1px solid #303641;padding-bottom:19px}
+.mac-result-top h3{color:#f6f7f9;font-size:24px;margin:10px 0 6px}.mac-result-top p{color:#9daabc;font-size:13px}
+.mac-source{font-size:10px;color:#ff8a24;border:1px solid rgba(255,101,0,.25);border-radius:30px;padding:8px 10px;white-space:nowrap}
+.mac-details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding:21px 0}.mac-details div{display:grid;gap:7px}.mac-details span{font-size:11px;color:#9daabc}.mac-details strong{font-size:14px;color:#e8edf5;overflow-wrap:anywhere}
+.mac-address-note{font-size:12px;color:#aeb9c7;line-height:1.6;margin-bottom:16px}
+.mac-history{display:grid;gap:8px}.mac-history-item{background:#101924;border:1px solid #303641;border-radius:9px;padding:13px 15px;color:#d9e1ea;text-align:left;display:flex;justify-content:space-between;gap:12px;cursor:pointer}
+.mac-history-item:hover{border-color:#ff6500}.mac-history-item span{font-size:12px;letter-spacing:.05em}.mac-history-item strong{font-size:12px;font-weight:600}
+.mac-disclaimer{line-height:1.7;margin:4px 3px 20px}
+@media(max-width:700px){.mac-input-row,.mac-result-top,.mac-history-item{flex-direction:column}.mac-details{grid-template-columns:1fr}.mac-input-row button{width:100%}}

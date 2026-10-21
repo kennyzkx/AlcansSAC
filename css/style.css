@@ -1,0 +1,24 @@
+:root{color-scheme:dark;--bg:#101216;--panel:#15181e;--text:#f4f5f7;--muted:#a1a8b4;--orange:#ff6500;--border:#343a45}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif}body{background:var(--bg);color:var(--text)}
+.login-layout{display:grid;grid-template-columns:65% 35%;min-height:100vh;min-height:100dvh}
+.brand-panel{position:relative;isolation:isolate;overflow:hidden;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 54%,rgba(255,101,0,.085),transparent 55%),#101216;border-right:1px solid #282b31}
+#constellations{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.brand-content{text-align:center;padding:40px 24px;max-width:100%;width:100%;display:flex;flex-direction:column;align-items:center}
+.brand-logo{display:block;width:min(280px,78%);height:auto;max-height:170px;object-fit:contain;opacity:1;visibility:visible}
+.logo-warning{color:#ffb38a;font-size:13px;max-width:330px;line-height:1.5}
+.brand-subtitle{margin:14px 0 0;font-size:12px;letter-spacing:3.3px;color:#aeb4bf}
+.brand-divider{display:block;width:46px;height:2px;background:var(--orange);margin:37px auto 22px;box-shadow:0 0 14px rgba(255,101,0,.3)}
+.brand-message{margin:0;color:#c3c7cf;line-height:1.7;font-size:clamp(14px,1.25vw,18px)}.brand-message strong{color:var(--orange);font-weight:600}
+.form-panel{display:flex;align-items:center;justify-content:center;background:#15181e;padding:48px 9%}
+.login-card{width:100%;max-width:440px}h1{font-size:clamp(28px,2.7vw,36px);margin:0 0 8px;letter-spacing:-.8px}.intro{color:var(--muted);margin:0 0 38px;font-size:14px;line-height:1.5}
+form{display:flex;flex-direction:column}form>label{font-size:13px;font-weight:650;margin-bottom:9px}.input-wrap{position:relative;margin-bottom:26px}.input-wrap input{width:100%;height:52px;border-radius:8px;border:1px solid var(--border);background:#1c2129;color:var(--text);font-size:14px;padding:0 48px;outline:none;transition:border-color .2s,box-shadow .2s}.input-wrap input::placeholder{color:#7d8795}.input-wrap input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,101,0,.12)}.input-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:17px;color:#a7afbc;pointer-events:none}.eye-button{position:absolute;right:9px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:#aeb5c0;cursor:pointer;padding:10px;font-size:18px}
+.form-options{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:-2px 0 27px;font-size:13px}.remember{display:flex;align-items:center;gap:8px;color:#aab2be;cursor:pointer}.remember input{accent-color:var(--orange)}a{color:var(--orange);text-decoration:none}a:hover{text-decoration:underline}.submit-button{width:100%;height:52px;background:var(--orange);color:white;border:0;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;transition:background .2s,transform .2s}.submit-button:hover{background:#ff7a21;transform:translateY(-1px)}.submit-button span{margin-left:6px}.feedback{min-height:20px;margin:15px 0 0;color:#b9c1cb;font-size:13px;line-height:1.5}
+@media(max-width:760px){.login-layout{grid-template-columns:1fr}.brand-panel{min-height:290px;border-right:0;border-bottom:1px solid #282b31}.brand-content{padding:32px 18px}.brand-logo{width:min(210px,70%)}.brand-divider{margin:20px auto 12px}.brand-message{font-size:14px}.form-panel{padding:42px 24px 50px}.login-card{max-width:450px}.intro{margin-bottom:28px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important}}
+
+
+.login-card{max-width:390px}
+
+#recovery-form[hidden],#login-form[hidden]{display:none!important}
+#recovery-form h2{font-size:26px;margin:0 0 8px}
+#recovery-form .intro{margin-bottom:28px}
+#recovery-form .input-wrap input{padding:0 16px}

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Alcans | Central Operacional</title>
+
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="administracao/admin.css">
+  <link rel="stylesheet" href="modules/ferramentas/ferramentas.css">
+  <link rel="stylesheet" href="css/calendar.css">
+  <link rel="stylesheet" href="modules/docs/docs.css">
+
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script defer src="js/supabase.js"></script>
+  <script defer src="js/auth.js"></script>
+  <script defer src="core/modules.js"></script>
+  <script defer src="js/shell.js"></script>
+  <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <script defer src="modules/ferramentas/generalFines.js"></script>
+  <script defer src="modules/ferramentas/saoCarlosFines.js"></script>
+  <script defer src="js/calendar.js"></script>
+  <script defer src="modules/ferramentas/ferramentas.js"></script>
+  <script defer src="modules/ferramentas/mac.js"></script>
+  <script defer src="modules/docs/docs.js"></script>
+  <script defer src="js/dashboard.js"></script>
+  <script defer src="administracao/admin.js"></script>
+  <script defer src="administracao/importacao.js"></script>
+</head>
+
+<body>
+  <div class="auth-loading" id="auth-loading">
+    Verificando acesso...
+  </div>
+
+  <div class="app-shell" id="app-view" hidden>
+    <aside class="sidebar" aria-label="Menu principal">
+      <div class="sidebar-brand">
+        <img class="sidebar-logo" src="assets/logo-alcans.png" alt="Alcans">
+      </div>
+
+      <nav class="side-nav" id="side-nav" aria-label="Seções">
+        <button class="nav-link active" type="button" data-page="inicio">
+          <span class="nav-icon">⌂</span>
+          Início
+        </button>
+
+        <div id="dynamic-main-nav"></div>
+
+        <div class="sidebar-admin-group" id="admin-nav-group" hidden>
+          <button class="nav-link sidebar-admin-toggle" type="button" data-page="administracao" id="admin-nav" aria-expanded="false" aria-controls="admin-submenu">
+            <span class="nav-icon">⚙</span>
+            <span class="sidebar-nav-label">Administração</span>
+            <svg class="sidebar-chevron" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="sidebar-submenu" id="admin-submenu" aria-hidden="true"><div class="sidebar-submenu-inner">
+            <button type="button" class="sidebar-subitem" data-admin-target="users" data-permission="users.view"><span aria-hidden="true">♙</span>Gerir usuários</button>
+            <button type="button" class="sidebar-subitem" data-admin-target="roles" data-permission="roles.manage"><span aria-hidden="true">⚙</span>Cargos e permissões</button>
+            <button type="button" class="sidebar-subitem" data-admin-target="import" data-permission="results.import"><span aria-hidden="true">⇧</span>Importar resultados</button>
+            <button type="button" class="sidebar-subitem" data-admin-target="islands" data-permission="users.manage"><span aria-hidden="true">▦</span>Configurar ilhas</button>
+          </div></div>
+        </div>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-quote">
+          <span>✺</span>
+          Internet conecta aparelhos.
+          <br>
+          <strong>Um bom atendimento conecta pessoas.</strong>
+        </div>
+        <small>Alcans</small>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="topbar-title">
+          CENTRAL OPERACIONAL
+          <span>/</span>
+          <b id="topbar-current">Início</b>
+        </div>
+
+        <div class="topbar-actions">
+          <span class="online-dot"></span>
+          <span>Minha conta</span>
+          <div class="avatar" id="avatar">SA</div>
+          <span class="top-user" id="top-user">Atendente</span>
+
+          <button class="logout-btn" id="logout" title="Sair da conta" type="button">
+            Sair ↗
+          </button>
+        </div>
+      </header>
+
+      <div class="tabbar" id="tabbar" aria-label="Abas abertas"></div>
+
+      <div class="content-scroll">
+
+        <!-- ==================================
+             ABA INÍCIO
+        =================================== -->
+
+        <section class="dashboard" id="dashboard-page">
+          <div class="hero">
+            <div class="hero-text">
+              <div class="eyebrow">
+                SEU ESPAÇO DE RESULTADOS
+              </div>
+
+              <h1>
+                Olá, <span id="greeting-name">atendente</span>!
+              </h1>
+
+              <p>
+                Acompanhe seu desempenho e veja o que você conquistou.
+              </p>
+            </div>
+
+            <div class="hero-art" aria-hidden="true">
+              <div class="orb"></div>
+            </div>
+
+            <div class="hero-date">
+              <span id="today-date"></span>
+              <strong id="today-clock"></strong>
+              <small>
+                <i></i>
+                Painel de desempenho
+              </small>
+            </div>
+          </div>
+
+          <div class="data-toolbar">
+            <div>
+              <span class="data-label">
+                Fonte dos indicadores
+              </span>
+              <strong id="data-source">
+                Indicadores da minha conta
+              </strong>
+            </div>
+          </div>
+
+          <div class="metrics-grid">
+            <article class="metric-card">
+              <div class="metric-head">
+                <span class="metric-icon">◎</span>
+                <span>FCR</span>
+              </div>
+              <strong id="metric-fcr">—</strong>
+              <small>Resolução no primeiro contato</small>
+              <div class="metric-wave orange"></div>
+            </article>
+
+            <article class="metric-card">
+              <div class="metric-head">
+                <span class="metric-icon">▥</span>
+                <span>Produtividade</span>
+              </div>
+              <strong id="metric-prod">—</strong>
+              <small>Índice de produtividade</small>
+              <div class="metric-wave blue"></div>
+            </article>
+
+            <article class="metric-card">
+              <div class="metric-head">
+                <span class="metric-icon">◷</span>
+                <span>TMA</span>
+              </div>
+              <strong id="metric-tma">—</strong>
+              <small>Tempo médio de atendimento</small>
+              <div class="metric-wave green"></div>
+            </article>
+
+            <article class="metric-card">
+              <div class="metric-head">
+                <span class="metric-icon">♧</span>
+                <span>
+                  CTR <em>(Total do BI)</em>
+                </span>
+              </div>
+              <strong id="metric-ctr">—</strong>
+              <small>Volume total informado pelo BI</small>
+              <div class="metric-wave orange"></div>
+            </article>
+          </div>
+
+          <div class="analytics-grid">
+            <article class="panel channel-panel">
+              <div class="panel-header">
+                <div class="panel-icon">◉</div>
+                <div>
+                  <h2>Meus atendimentos</h2>
+                  <p>Distribuição por canal de atendimento</p>
+                </div>
+              </div>
+
+              <div class="channel-body">
+                <div class="donut-wrap">
+                  <div class="donut" id="donut">
+                    <div class="donut-center">
+                      <strong id="classified-total">—</strong>
+                      <small>
+                        atendimentos
+                        <br>
+                        classificados
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="channel-legend">
+                  <div>
+                    <span>
+                      <i class="dot voice"></i>
+                      Ligações (Voice)
+                    </span>
+                    <strong id="voice-count">—</strong>
+                  </div>
+
+                  <div>
+                    <span>
+                      <i class="dot whatsapp"></i>
+                      WhatsApp
+                    </span>
+                    <strong id="whatsapp-count">—</strong>
+                  </div>
+
+                  <div>
+                    <span>
+                      <i class="dot webchat"></i>
+                      Webchat
+                    </span>
+                    <strong id="webchat-count">—</strong>
+                  </div>
+
+                  <div>
+                    <span>
+                      <i class="dot email"></i>
+                      E-mail
+                    </span>
+                    <strong id="email-count">—</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="channel-footer">
+                <span id="channel-note">
+                  Os canais são apresentados conforme o BI,
+                  sem ajustes artificiais.
+                </span>
+              </div>
+            </article>
+
+            <article class="panel details-panel">
+              <div class="panel-header">
+                <div class="panel-icon">↗</div>
+                <div>
+                  <h2>Visão do desempenho</h2>
+                  <p>
+                    Indicadores disponíveis no relatório importado
+                  </p>
+                </div>
+              </div>
+
+              <div class="details-list">
+                <div>
+                  <span>Satisfação</span>
+                  <strong id="metric-satisfaction">—</strong>
+                </div>
+                <div>
+                  <span>Faixa de produtividade</span>
+                  <strong id="metric-range">—</strong>
+                </div>
+                <div>
+                  <span>Atendimentos por ligação</span>
+                  <strong id="voice-detail">—</strong>
+                </div>
+                <div>
+                  <span>Atendimentos por mensagem</span>
+                  <strong id="messages-detail">—</strong>
+                </div>
+              </div>
+
+              <div class="details-tip">
+                Os indicadores são exibidos conforme os dados
+                disponíveis no sistema.
+              </div>
+            </article>
+          </div>
+
+          <div class="footer-note">
+            Meu desempenho
+          </div>
+        </section>
+
+        <!-- ==================================
+             ABA ADMINISTRAÇÃO
+        =================================== -->
+
+        <section class="admin-page" id="admin-page" hidden>
+
+          <!-- A navegação da Administração fica no menu lateral. -->
+          <div id="admin-home" hidden></div>
+          <div class="admin-legacy-actions" hidden aria-hidden="true">
+            <button id="open-users" type="button">Gerir usuários</button>
+            <button id="open-roles" type="button">Cargos e permissões</button>
+            <button id="open-import" type="button">Importar resultados</button>
+            <button id="open-islands" type="button">Configurar ilhas</button>
+          </div>
+
+          <!-- ==================================
+               GERIR USUÁRIOS
+          =================================== -->
+
+          <div id="admin-users-container" hidden>
+            <button class="admin-button admin-back" type="button" data-admin-back>
+              ← Voltar à Administração
+            </button>
+
+            <section class="admin-page" id="admin-users-view">
+              <div class="admin-heading">
+                <div class="eyebrow">
+                  ADMINISTRAÇÃO / GERIR USUÁRIOS
+                </div>
+                <h1>Gerir usuários</h1>
+                <p>
+                  Cadastre colaboradores diretamente no Supabase
+                  e gerencie seus cargos.
+                </p>
+              </div>
+
+              <div class="admin-grid">
+
+                <!-- CADASTRO DIRETO -->
+                <article class="panel admin-card">
+                  <h2>Criar usuário</h2>
+                  <p>
+                    O colaborador poderá acessar a plataforma
+                    com o e-mail e a senha inicial cadastrados.
+                  </p>
+
+                  <form class="admin-form" id="invite-form">
+                    <label>
+                      Nome completo
+                      <input name="full_name" type="text" maxlength="120" autocomplete="off" required>
+                    </label>
+
+                    <label>
+                      E-mail corporativo
+                      <input name="email" type="email" autocomplete="off" required>
+                    </label>
+
+                    <label>
+                      Senha inicial
+                      <input name="password" type="password" minlength="12" maxlength="128" autocomplete="new-password" required>
+                    </label>
+
+                    <label>
+                      Cargo
+                      <select name="role_id" id="invite-role" required></select>
+                    </label>
+
+                    <button class="admin-button" type="submit">
+                      Criar usuário
+                    </button>
+                  </form>
+
+                  <p class="admin-status" id="invite-status" role="status"></p>
+                </article>
+
+                <!-- LISTA DE USUÁRIOS -->
+                <article class="panel admin-card">
+                  <h2>Contas cadastradas</h2>
+                  <p>
+                    Consulte os colaboradores e gerencie seus cargos.
+                  </p>
+
+                  <div class="users-list" id="users-list"></div>
+
+                  <p class="admin-status" id="users-status" role="status"></p>
+                </article>
+
+              </div>
+            </section>
+          </div>
+
+          <!-- ==================================
+               CARGOS E PERMISSÕES
+          =================================== -->
+
+          <div id="admin-roles-container" hidden>
+            <button class="admin-button admin-back" type="button" data-admin-back>
+              ← Voltar à Administração
+            </button>
+
+            <section class="admin-page" id="admin-roles-view">
+              <div class="admin-heading">
+                <div class="eyebrow">
+                  ADMINISTRAÇÃO / CARGOS
+                </div>
+                <h1>Cargos e permissões</h1>
+                <p>
+                  Organize os níveis de acesso dos colaboradores.
+                </p>
+              </div>
+
+              <div class="admin-grid">
+                <article class="panel admin-card">
+                  <h2>Criar cargo</h2>
+
+                  <form class="admin-form" id="role-form">
+                    <label>
+                      Nome do cargo
+                      <input name="name" type="text" minlength="2" maxlength="50" placeholder="Ex.: Qualidade" required>
+                    </label>
+
+                    <button class="admin-button" type="submit">
+                      Criar cargo
+                    </button>
+                  </form>
+                </article>
+
+                <article class="panel admin-card">
+                  <h2>Permissões do cargo</h2>
+
+                  <div class="role-editor">
+                    <label>
+                      Editar cargo
+                      <select id="edit-role"></select>
+                    </label>
+
+                    <div class="permission-checks" id="permission-checks"></div>
+
+                    <button class="admin-button" id="save-permissions" type="button">
+                      Salvar permissões
+                    </button>
+                  </div>
+
+                  <p class="admin-status" id="roles-status" role="status"></p>
+                </article>
+              </div>
+            </section>
+          </div>
+
+          <div id="admin-import-container" hidden><button type="button" class="admin-button admin-back" data-admin-back>← Voltar à Administração</button><div id="sac-import-mount"></div></div>
+          <div id="admin-islands-container" hidden><button type="button" class="admin-button admin-back" data-admin-back>← Voltar à Administração</button><div id="sac-islands-mount"></div></div>
+        </section>
+
+        <section class="docs-page" id="docs-page" hidden><div id="docs-body"></div></section>
+        <!-- NENHUMA ABA ABERTA -->
+        <section class="tool-page" id="tool-page" hidden>
+          <div class="tool-heading"><div><span class="tool-kicker" id="tool-heading-path">FERRAMENTAS / VISÃO GERAL</span><h1 id="tool-heading-title">Ferramentas</h1><p id="tool-heading-subtitle">Ferramentas operacionais integradas ao painel.</p></div></div>
+          <div id="tool-body"></div>
+        </section>
+        <section class="empty-page" id="empty-page" hidden>
+          <h2>Nenhuma aba aberta</h2>
+          <p>
+            Selecione Início no menu lateral para abrir
+            o painel novamente.
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
