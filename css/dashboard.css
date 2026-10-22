@@ -212,3 +212,9 @@ body:has(.app-shell:not([hidden])) .sidebar {
 .alcans-tool-nav-icon{width:20px;height:20px;flex:0 0 20px;display:inline-flex;align-items:center;justify-content:center;color:#ff6500}
 .alcans-tool-nav-icon svg{display:block;width:18px;height:18px}
 .sidebar-admin-toggle .nav-icon[data-tools-icon]{display:inline-flex;align-items:center;justify-content:center}
+
+.gestor-agent-filter{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:0 0 18px;padding:16px;background:#141f2c;border:1px solid #2d3a4b;border-radius:12px}
+.gestor-agent-filter[hidden]{display:none}
+.gestor-agent-filter label{font-size:13px;color:#d5dde7}
+.gestor-agent-filter select{flex:1;min-width:210px;max-width:440px;padding:10px;border:1px solid #3b4859;border-radius:8px;background:#0c1622;color:#f4f6fa;font:inherit;font-size:13px}
+#gestor-agent-feedback{font-size:12px;color:#aeb9c7}

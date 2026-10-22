@@ -117,12 +117,30 @@ document.addEventListener(
   async ({ detail: { user, profile, client } }) => {
     updateClock();
     setInterval(updateClock, 1000);
+    const gestor = Number(profile?.role_id) === 1;
+    const selector = $("gestor-agent-select"), filter = $("gestor-agent-filter"), feedback = $("gestor-agent-feedback");
+    let requestId = 0;
+    if (gestor) {
+      filter.hidden = false;
+      const {data,error} = await client.rpc("sac_gestor_agents",{p_period:getPeriod()});
+      if(error){feedback.textContent="Não foi possível listar os colaboradores.";console.error(error);}
+      else for(const agent of data?.agents || []){
+        const option=document.createElement("option");
+        option.value=agent.user_id;option.textContent=agent.name || "Colaborador";selector.appendChild(option);
+      }
+      selector.addEventListener("change",()=>load());
+    }
     async function load() {
+      const thisRequest=++requestId;
+      const selectedId=gestor ? selector.value : "";
+      if(gestor){selector.disabled=true;feedback.textContent="Carregando indicadores...";}
+
       try {
         const period = getPeriod();
-        const { data, error } = await client.rpc("sac_dashboard", {
-          p_period: period,
-        });
+        const { data, error } = selectedId
+          ? await client.rpc("sac_gestor_agent_metrics",{p_period:period,p_user_id:selectedId})
+          : await client.rpc("sac_dashboard",{p_period:period});
+        if(thisRequest!==requestId)return;
         if (error) throw error;
         const m = data.metrics || {};
         const tma = secondsToTime(m.tma_seconds);
@@ -137,7 +155,7 @@ document.addEventListener(
               Produtividade: m.produtividade,
               "% FCR": m.fcr == null ? null : m.fcr + "%",
               "% Satisfeito": m.satisfacao == null ? null : m.satisfacao + "%",
-              "Faixa Produtividade SAC": "—",
+              "Faixa Produtividade SAC": selectedId ? (m.faixa_produtividade || "—") : "—",
             }
           : null;
         renderAgent(r, user, profile);
@@ -151,18 +169,22 @@ document.addEventListener(
           "/" +
           year +
           " • " +
-          (m.contributors || 0) +
-          " colaboradores" +
+          (selectedId ? "Resultados de " + (data.name || selector.selectedOptions[0]?.textContent || "colaborador") : (m.contributors || 0) + " colaboradores") +
           (pending.length
             ? " • Ilhas fora do período (não incluídas): " + pending.join(", ")
             : "");
-        if (m.contributors && $("metric-prod"))
+        if (!selectedId && m.contributors && $("metric-prod"))
           $("metric-range").textContent = "Consolidado";
+        if(gestor)feedback.textContent="";
       } catch (e) {
+        if(thisRequest!==requestId)return;
         console.error(e);
         $("data-source").textContent =
           "Não foi possível carregar os resultados: " + e.message;
         renderAgent(null, user, profile);
+        if(gestor)feedback.textContent="Falha ao carregar.";
+      } finally {
+        if(thisRequest===requestId && gestor)selector.disabled=false;
       }
     }
     await load();
