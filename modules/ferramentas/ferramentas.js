@@ -109,5 +109,5 @@
   const pages=doc.internal.getNumberOfPages();for(let i=1;i<=pages;i++){doc.setPage(i);text(`ID ${id}`,194,275,6.5,gray,'normal',{align:'right'});}
   const safe=client.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9_-]+/gi,'_').slice(0,42);doc.save(`Alcans_Relatorio_Indisponibilidade_${safe}_${now.toISOString().slice(0,10)}.pdf`);
  }
- window.AlcansTools={open(id){if(id==='mac'){if(root().dataset.active!=='mac'){window.AlcansMac?.mount(root(),heading);root().dataset.active='mac';}return;}if(id==='multas'){if(root().dataset.active!=='multas'){fineUI();root().dataset.active='multas';}}else if(id==='consumo'){if(root().dataset.active!=='consumo'){consumeUI();root().dataset.active='consumo';}}}};
+ window.AlcansTools={open(id){if(id==='cnpj'){if(root().dataset.active!=='cnpj'){window.AlcansCNPJ?.mount(root(),heading);root().dataset.active='cnpj';}return;}if(id==='mac'){if(root().dataset.active!=='mac'){window.AlcansMac?.mount(root(),heading);root().dataset.active='mac';}return;}if(id==='multas'){if(root().dataset.active!=='multas'){fineUI();root().dataset.active='multas';}}else if(id==='consumo'){if(root().dataset.active!=='consumo'){consumeUI();root().dataset.active='consumo';}}}};
 })();

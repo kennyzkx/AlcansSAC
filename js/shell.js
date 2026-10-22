@@ -18,6 +18,7 @@
  const toolIcons={
    ferramentas:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 9v12M14 13h4M14 17h4"/>',
    multas:'<rect x="5" y="2.5" width="14" height="19" rx="2.5"/><path d="M9 7h6M9 11h2M15 11h.01M9 15h2M15 15h.01M9 19h6"/>',
+   cnpj:'<rect x="3" y="8" width="18" height="13" rx="1"/><path d="M7 8V3h10v5M8 12h2M14 12h2M8 16h2M14 16h2M12 21v-4"/>',
    mac:'<rect x="3" y="4" width="7" height="6" rx="1.5"/><rect x="14" y="4" width="7" height="6" rx="1.5"/><rect x="8.5" y="15" width="7" height="6" rx="1.5"/><path d="M6.5 10v3h11v-3M12 13v2"/>',
    docs:'<path d="M4 5.5c3-1 5.5-.6 8 1.2 2.5-1.8 5-2.2 8-1.2v13c-3-1-5.5-.6-8 1.2-2.5-1.8-5-2.2-8-1.2z"/><path d="M12 6.7v13"/>',
    procedimentos:'<path d="M4 5.5c3-1 5.5-.6 8 1.2 2.5-1.8 5-2.2 8-1.2v13c-3-1-5.5-.6-8 1.2-2.5-1.8-5-2.2-8-1.2z"/><path d="M12 6.7v13"/>',
