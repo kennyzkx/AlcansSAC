@@ -22,7 +22,19 @@
   el.querySelector('.alcans-ai-reset').addEventListener('click',()=>{history.length=0;messages.innerHTML='<div class="alcans-ai-intro"><span>✦</span><strong>Olá novamente! Eu sou a AL. 🧡</strong><p>Vamos começar um novo atendimento? Me conte o que está acontecendo com o cliente. Posso sugerir uma resposta natural e orientar você até o procedimento certo no DOCS.</p></div>';input.focus();});
   function addMessage(role,text,links=[]) {
     const item=document.createElement('div');item.className='alcans-ai-message '+(role==='user'?'is-user':'is-assistant');
-    const bubble=document.createElement('div');bubble.className='alcans-ai-bubble';bubble.textContent=text;item.append(bubble);
+    const bubble=document.createElement('div');bubble.className='alcans-ai-bubble';
+    if(role==='user')bubble.textContent=text;
+    else {
+      // Renderiza somente **negrito** com elementos DOM seguros (sem interpretar HTML).
+      // Conserva quebras de linha e impede a execução de HTML enviado pelo modelo.
+      const parts=String(text).split(/(\*\*[^*\n]+\*\*)/g);
+      for(const part of parts){
+        if(part.startsWith('**')&&part.endsWith('**')&&part.length>4){
+          const strong=document.createElement('strong');strong.textContent=part.slice(2,-2);bubble.append(strong);
+        }else bubble.append(document.createTextNode(part));
+      }
+    }
+    item.append(bubble);
     if(role!=='user'&&text){const copy=document.createElement('button');copy.type='button';copy.className='alcans-ai-copy';copy.textContent='Copiar';copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(text);copy.textContent='Copiado!';setTimeout(()=>copy.textContent='Copiar',1500);}catch{copy.textContent='Selecione o texto para copiar';}});item.append(copy);}
     for(const doc of links){if(!doc?.id||!doc?.title)continue;const b=document.createElement('button');b.type='button';b.className='alcans-ai-doc-link';b.textContent='📖 DOCS · '+doc.title;b.addEventListener('click',()=>{window.AlcansNavigate?.('procedimentos');window.AlcansDocs?.showArticle?.(doc.id);});item.append(b);}
     messages.append(item);messages.scrollTop=messages.scrollHeight;return item;
