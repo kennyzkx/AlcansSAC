@@ -100,5 +100,5 @@
    };
  }
 
- window.AlcansDocs={open(s,c){ctx=c;if(s==='sistemas'){if(section!==s){section=s;path=[]}loadSystems();return}if(section!==s){section=s;path=[];load()}else if(!items.length)load();else render()}};
+ window.AlcansDocs={showArticle:async id=>{if(section!=='procedimentos')return; if(!items.length)await load();const x=items.find(i=>i.id===id&&i.kind==='article');if(!x)return;const chain=[];let current=x;while(current?.parent_id){const folder=items.find(i=>i.id===current.parent_id);if(!folder)break;chain.unshift(folder.id);current=folder;}path=chain;render();view(x);},open(s,c){ctx=c;if(s==='sistemas'){if(section!==s){section=s;path=[]}loadSystems();return}if(section!==s){section=s;path=[];load()}else if(!items.length)load();else render()}};
 })();

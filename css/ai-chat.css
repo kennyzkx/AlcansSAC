@@ -1,0 +1,40 @@
+/* Assistente Alcans: janela independente da navegação entre abas */
+.alcans-ai{position:fixed;inset:0;pointer-events:none;z-index:10000;font-family:inherit;color:#edf3fa}
+.alcans-ai *{box-sizing:border-box}
+.alcans-ai-launch{position:absolute;right:24px;bottom:24px;width:60px;height:60px;border:1px solid #ff9b54;border-radius:20px;background:linear-gradient(145deg,#ff7b22,#f05b00);color:#fff;box-shadow:0 12px 32px #ff65004d;display:grid;place-items:center;cursor:pointer;pointer-events:auto;transition:transform .18s,box-shadow .18s}
+.alcans-ai-launch:hover{transform:translateY(-3px);box-shadow:0 16px 36px #ff650069}
+.alcans-ai-launch.is-open{opacity:.75}
+.alcans-ai-window{position:absolute;right:24px;bottom:96px;width:min(380px,calc(100vw - 24px));height:min(540px,calc(100dvh - 120px));background:#111c2a;border:1px solid #344154;border-radius:17px;box-shadow:0 20px 65px #0009;display:flex;flex-direction:column;overflow:hidden;pointer-events:auto}
+.alcans-ai-window[hidden]{display:none}
+.alcans-ai-header{flex:0 0 auto;background:#172639;border-bottom:1px solid #344154;display:flex;align-items:center;justify-content:space-between;padding:13px 14px;cursor:grab;touch-action:none;user-select:none}
+.alcans-ai-header.dragging{cursor:grabbing}
+.alcans-ai-brand{display:flex;gap:11px;align-items:center;pointer-events:none}
+.alcans-ai-brand strong{display:block;font-size:14px;color:#f4f7fb}
+.alcans-ai-brand small{display:block;color:#a5b3c5;font-size:11px;margin-top:2px}
+.alcans-ai-star{background:#ff650020;color:#ff7a22;border:1px solid #ff650066;border-radius:10px;width:36px;height:36px;display:grid;place-items:center;font-size:22px}
+.alcans-ai-controls{display:flex;gap:5px}
+.alcans-ai-controls button{border:0;background:transparent;color:#c3cedb;font-size:23px;cursor:pointer;width:30px;height:30px;border-radius:7px}
+.alcans-ai-controls button:hover{background:#2c3b4e;color:white}
+.alcans-ai-messages{flex:1;overflow-y:auto;min-height:0;padding:16px 14px;display:flex;flex-direction:column;gap:14px;scrollbar-color:#4b5c70 transparent}
+.alcans-ai-intro{text-align:center;margin:auto 0;padding:14px 9px;color:#b5c1cf}
+.alcans-ai-intro span{display:block;color:#ff7417;font-size:30px;margin-bottom:10px}
+.alcans-ai-intro strong{display:block;color:#f0f5fa;font-size:15px}
+.alcans-ai-intro p{font-size:12px;line-height:1.6;margin:9px 0 0}
+.alcans-ai-message{max-width:94%;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.alcans-ai-message.is-user{align-self:flex-end;align-items:flex-end}
+.alcans-ai-bubble{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;font-size:13px;background:#213147;border:1px solid #34465b;padding:11px 13px;border-radius:13px 13px 13px 4px}
+.is-user .alcans-ai-bubble{background:#e9650d;border-color:#f98032;color:#fff;border-radius:13px 13px 4px 13px}
+.alcans-ai-copy{font-size:11px;color:#f7a36a;background:transparent;border:0;padding:2px 5px;cursor:pointer}
+.alcans-ai-doc-link{font-size:12px;text-align:left;border:1px solid #ff650063;background:#ff650014;color:#ffae7c;border-radius:9px;padding:9px 11px;cursor:pointer;max-width:100%}
+.alcans-ai-doc-link:hover{background:#ff65002a}
+.alcans-ai-shortcuts{display:flex;gap:8px;padding:7px 13px 0;flex-wrap:wrap}
+.alcans-ai-shortcuts button{font:inherit;font-size:11px;background:#1a2b3f;border:1px solid #344b64;color:#e0e8f0;border-radius:14px;padding:7px 11px;cursor:pointer}
+.alcans-ai-shortcuts button:hover{border-color:#ff6500}
+.alcans-ai-form{display:flex;align-items:flex-end;gap:8px;padding:11px 13px 5px}
+.alcans-ai-form textarea{resize:none;flex:1;min-width:0;min-height:48px;max-height:110px;border:1px solid #435169;border-radius:11px;padding:11px 12px;background:#0b1623;color:#fff;font:inherit;font-size:13px;outline:none}
+.alcans-ai-form textarea:focus{border-color:#ff6500}
+.alcans-ai-send{height:45px;width:45px;flex:0 0 45px;background:#ff6500;color:#fff;border:0;border-radius:11px;cursor:pointer;font-size:21px}
+.alcans-ai-send:disabled{opacity:.45;cursor:wait}
+.alcans-ai-note{font-size:10px;text-align:center;color:#8d9aab;padding:4px 12px 11px}
+.alcans-ai-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+@media(max-width:500px){.alcans-ai-launch{right:13px;bottom:13px;width:54px;height:54px}.alcans-ai-window{right:12px;bottom:78px;height:min(540px,calc(100dvh - 100px))}}

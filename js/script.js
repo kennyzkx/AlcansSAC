@@ -3,7 +3,7 @@ const $ = (id) => document.getElementById(id);
 const authClient = window.centralSAC;
 if (!authClient)
   $("form-feedback").textContent =
-    "Configure o Supabase em supabase-config.js.";
+    "Não foi possível iniciar a conexão. Atualize a página.";
 const recoveryForm = $("recovery-form");
 const loginForm = $("login-form");
 const recoveryFeedback = $("recovery-feedback");

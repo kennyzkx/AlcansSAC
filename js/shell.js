@@ -112,6 +112,7 @@
      tab.append(label,close);bar.append(tab);
    }
  }
+ window.AlcansNavigate = id => navigate(id);
  function navigate(id){
    if(!permitted(byId(id)))return;
    if(!tabs.includes(id))tabs.push(id);
