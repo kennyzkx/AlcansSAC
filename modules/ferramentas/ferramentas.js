@@ -93,9 +93,9 @@
   let fy=218;for(const v of findings){box(16,fy-3,2,2,O,1);fy=wrap(v,23,fy,168,9,dark,'normal',5)+5}
   box(16,246,178,26,Olight,2);text('SOBRE A INTERPRETAÇÃO',22,254,8,O,'bold');wrap('Este documento registra intervalos identificados entre sessões importadas. Não determina, isoladamente, a causa da falha nem substitui laudo pericial.',22,260,164,8,dark,'normal',4.2);
   footer();
-  const events=a.rows.map((row,i)=>{const gap=a.gaps[i];const older=a.rows[i+1];return {start:older?.stop,end:row.start,duration:gap}}).filter(e=>e.duration>0).sort((x,y)=>y.duration-x.duration);
-  if(events.length){doc.addPage();header();title('Análise dos eventos','Interrupções identificadas','Maiores intervalos entre o término de uma sessão e o início da sessão seguinte.');
-   const top=events.slice(0,7),max=top[0].duration;
+  const events=a.rows.map((row,i)=>{const gap=a.gaps[i];const older=a.rows[i+1];return {start:older?.stop,end:row.start,duration:gap}}).filter(e=>e.duration>0).sort((x,y)=>x.start.getTime()-y.start.getTime()||x.end.getTime()-y.end.getTime());
+  if(events.length){doc.addPage();header();title('Análise dos eventos','Interrupções identificadas','Interrupções em ordem cronológica, da mais antiga para a mais recente.');
+   const top=events.slice(0,7),max=Math.max(...top.map(e=>e.duration));
    top.forEach((e,i)=>{const y=94+i*23;text(String(i+1).padStart(2,'0'),16,y+3,9,O,'bold');text(`${datetime(e.start)}  →  ${datetime(e.end)}`,30,y-3,8,dark,'normal');box(30,y+2,118,6,pale,2);box(30,y+2,Math.max(2,118*e.duration/max),6,O,2);text(seconds(e.duration),194,y+7,9,dark,'bold',{align:'right'})});
    box(16,262,178,12,Olight,2);text('Barras proporcionais à duração da maior interrupção apresentada.',21,269.5,8,gray);footer();
   }
