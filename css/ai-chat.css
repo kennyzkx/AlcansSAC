@@ -43,3 +43,6 @@
 .alcans-ai-send{display:grid;place-items:center;position:relative;z-index:1;touch-action:manipulation}
 .alcans-ai-send[aria-busy="true"]{opacity:.7}
 .alcans-ai-form textarea[readonly]{opacity:1;cursor:progress}
+
+/* A saudação inicial utiliza o mesmo balão das respostas da AL. */
+.alcans-ai-welcome{margin-top:2px;align-self:flex-start}

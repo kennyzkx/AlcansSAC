@@ -10,7 +10,7 @@
   el.innerHTML = `<button type="button" class="alcans-ai-launch" aria-label="Abrir assistente Alcans" aria-expanded="false" title="Assistente Alcans"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 14 9l6 3-6 2-2 7-2-7-6-2 6-3 2-6Z"/><path d="M19 2v5M16.5 4.5h5"/></svg></button>
   <div class="alcans-ai-window" hidden role="dialog" aria-label="Assistente de atendimento Alcans">
     <header class="alcans-ai-header" title="Arraste para mover o chat"><div class="alcans-ai-brand"><span class="alcans-ai-star">✦</span><div><strong>AL · Assistente Alcans</strong><small>Seu apoio no atendimento humanizado</small></div></div><div class="alcans-ai-controls"><button type="button" class="alcans-ai-reset" title="Nova conversa" aria-label="Nova conversa">↻</button><button type="button" class="alcans-ai-close" title="Minimizar" aria-label="Minimizar">×</button></div></header>
-    <div class="alcans-ai-messages" role="log" aria-live="polite" aria-relevant="additions"><div class="alcans-ai-intro"><span>✦</span><strong>Olá! Eu sou a AL. 🧡</strong><p>Sou sua assistente de atendimento da Alcans! Estou aqui para ajudar você a entender melhor cada situação, acolher o cliente e encontrar as palavras certas para uma conversa mais humana. Também posso indicar onde consultar os procedimentos no DOCS. Me conta: como posso ajudar no seu atendimento?</p></div></div>
+    <div class="alcans-ai-messages" role="log" aria-live="polite" aria-relevant="additions"><div class="alcans-ai-message is-assistant alcans-ai-welcome"><div class="alcans-ai-bubble">Oi! 🧡 Sou a AL. Me conta o que está acontecendo com o cliente e vamos pensar juntos na melhor forma de atendê-lo.</div></div></div>
     <form class="alcans-ai-form"><label class="alcans-ai-sr" for="alcans-ai-input">Mensagem ao assistente</label><textarea id="alcans-ai-input" rows="2" maxlength="1800" placeholder="Descreva a situação do cliente..."></textarea><button type="submit" class="alcans-ai-send" aria-label="Enviar mensagem">➤</button></form>
     <div class="alcans-ai-note">Não envie senhas, CPF ou dados sensíveis do cliente.</div>
   </div>`;
@@ -20,7 +20,7 @@
   const close = () => {win.hidden=true;launch.setAttribute('aria-expanded','false');launch.classList.remove('is-open');launch.focus();};
   launch.addEventListener('click',()=>win.hidden?open():close());
   el.querySelector('.alcans-ai-close').addEventListener('click',close);
-  el.querySelector('.alcans-ai-reset').addEventListener('click',()=>{if(busy){addMessage('assistant','Aguarde a resposta atual antes de iniciar uma nova conversa.');return;}history.length=0;messages.innerHTML='<div class="alcans-ai-intro"><span>✦</span><strong>Olá novamente! Eu sou a AL. 🧡</strong><p>Vamos começar um novo atendimento? Me conte o que está acontecendo com o cliente. Posso sugerir uma resposta natural e orientar você até o procedimento certo no DOCS.</p></div>';input.focus();});
+  el.querySelector('.alcans-ai-reset').addEventListener('click',()=>{if(busy){addMessage('assistant','Aguarde a resposta atual antes de iniciar uma nova conversa.');return;}history.length=0;messages.innerHTML='<div class="alcans-ai-message is-assistant alcans-ai-welcome"><div class="alcans-ai-bubble">Vamos começar de novo? 🧡 Me conta como posso ajudar neste atendimento.</div></div>';input.focus();});
   function addMessage(role,text,links=[]) {
     const item=document.createElement('div');item.className='alcans-ai-message '+(role==='user'?'is-user':'is-assistant');
     const bubble=document.createElement('div');bubble.className='alcans-ai-bubble';
@@ -45,7 +45,7 @@
     if(!text||busy)return;
     context=context||window.SAC?.context||null;
     if(!context?.client){addMessage('assistant','A conexão com o sistema ainda não está pronta. Aguarde alguns segundos e tente novamente.');return;}
-    busy=true;const serial=++requestSerial;send.disabled=true;send.setAttribute('aria-busy','true');input.readOnly=true;input.value='';messages.querySelector('.alcans-ai-intro')?.remove();addMessage('user',text);const wait=addMessage('assistant','Pensando na melhor abordagem...');
+    busy=true;const serial=++requestSerial;send.disabled=true;send.setAttribute('aria-busy','true');input.readOnly=true;input.value='';addMessage('user',text);const wait=addMessage('assistant','Pensando na melhor abordagem...');
     try{
       const asksProcedure=/\b(procedimento|passo a passo|docs|como fazer|como realizar|onde encontro|onde consultar)\b/i.test(text);
       const wantsHuman=/insatisfeit|irritad|reclama|chatead|frustrad|nervos|brav|decepcionad|aborrecid|visita t[eé]cnica|humaniz|empati|acolh|como falar|como conversar|como abordar|como lidar/i.test(text);
