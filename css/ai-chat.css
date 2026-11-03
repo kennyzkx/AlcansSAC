@@ -38,3 +38,8 @@
 .alcans-ai-note{font-size:10px;text-align:center;color:#8d9aab;padding:4px 12px 11px}
 .alcans-ai-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 @media(max-width:500px){.alcans-ai-launch{right:13px;bottom:13px;width:54px;height:54px}.alcans-ai-window{right:12px;bottom:78px;height:min(540px,calc(100dvh - 100px))}}
+
+/* Mantém o botão clicável e visível durante o envio, inclusive em telas menores. */
+.alcans-ai-send{display:grid;place-items:center;position:relative;z-index:1;touch-action:manipulation}
+.alcans-ai-send[aria-busy="true"]{opacity:.7}
+.alcans-ai-form textarea[readonly]{opacity:1;cursor:progress}

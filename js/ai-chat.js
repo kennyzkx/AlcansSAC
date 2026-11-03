@@ -2,6 +2,7 @@
 (() => {
   let context = null;
   let busy = false;
+  let requestSerial = 0;
   const history = [];
   const escape = s => String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const el = document.createElement('section');
@@ -19,7 +20,7 @@
   const close = () => {win.hidden=true;launch.setAttribute('aria-expanded','false');launch.classList.remove('is-open');launch.focus();};
   launch.addEventListener('click',()=>win.hidden?open():close());
   el.querySelector('.alcans-ai-close').addEventListener('click',close);
-  el.querySelector('.alcans-ai-reset').addEventListener('click',()=>{history.length=0;messages.innerHTML='<div class="alcans-ai-intro"><span>✦</span><strong>Olá novamente! Eu sou a AL. 🧡</strong><p>Vamos começar um novo atendimento? Me conte o que está acontecendo com o cliente. Posso sugerir uma resposta natural e orientar você até o procedimento certo no DOCS.</p></div>';input.focus();});
+  el.querySelector('.alcans-ai-reset').addEventListener('click',()=>{if(busy){addMessage('assistant','Aguarde a resposta atual antes de iniciar uma nova conversa.');return;}history.length=0;messages.innerHTML='<div class="alcans-ai-intro"><span>✦</span><strong>Olá novamente! Eu sou a AL. 🧡</strong><p>Vamos começar um novo atendimento? Me conte o que está acontecendo com o cliente. Posso sugerir uma resposta natural e orientar você até o procedimento certo no DOCS.</p></div>';input.focus();});
   function addMessage(role,text,links=[]) {
     const item=document.createElement('div');item.className='alcans-ai-message '+(role==='user'?'is-user':'is-assistant');
     const bubble=document.createElement('div');bubble.className='alcans-ai-bubble';
@@ -39,21 +40,26 @@
     for(const doc of links){if(!doc?.id||!doc?.title)continue;const b=document.createElement('button');b.type='button';b.className='alcans-ai-doc-link';b.textContent='📖 DOCS · '+doc.title;b.addEventListener('click',()=>{window.AlcansNavigate?.('procedimentos');window.AlcansDocs?.showArticle?.(doc.id);});item.append(b);}
     messages.append(item);messages.scrollTop=messages.scrollHeight;return item;
   }
-  async function submit(){const text=input.value.trim();if(!text||busy||!context)return;busy=true;send.disabled=true;input.disabled=true;input.value='';messages.querySelector('.alcans-ai-intro')?.remove();addMessage('user',text);const wait=addMessage('assistant','Pensando na melhor abordagem...');
+  async function submit(){
+    const text=input.value.trim();
+    if(!text||busy)return;
+    context=context||window.SAC?.context||null;
+    if(!context?.client){addMessage('assistant','A conexão com o sistema ainda não está pronta. Aguarde alguns segundos e tente novamente.');return;}
+    busy=true;const serial=++requestSerial;send.disabled=true;send.setAttribute('aria-busy','true');input.readOnly=true;input.value='';messages.querySelector('.alcans-ai-intro')?.remove();addMessage('user',text);const wait=addMessage('assistant','Pensando na melhor abordagem...');
     try{
       const asksProcedure=/\b(procedimento|passo a passo|docs|como fazer|como realizar|onde encontro|onde consultar)\b/i.test(text);
       const wantsHuman=/insatisfeit|irritad|reclama|chatead|frustrad|nervos|brav|decepcionad|aborrecid|visita t[eé]cnica|humaniz|empati|acolh|como falar|como conversar|como abordar|como lidar/i.test(text);
       const humanOnly=wantsHuman&&!asksProcedure;
       const prompt=humanOnly?text+'\n\n[Orientação para AL: foque exclusivamente na escuta, em perguntar o que aconteceu e em uma mensagem pronta natural. NÃO mencione DOCS, procedimentos, descontos ou cancelamento se não forem pedidos.]':text;
       const payload=history.slice(-8).concat({role:'user',content:prompt});
-      const {data,error}=await context.client.functions.invoke('alcans-ai',{body:{messages:payload}});
+      const {data,error}=await Promise.race([context.client.functions.invoke('alcans-ai',{body:{messages:payload}}),new Promise((_,reject)=>setTimeout(()=>reject(new Error('A resposta está demorando mais que o esperado. Tente novamente.')),30000))]);
       if(error){let detail='Não foi possível consultar a IA agora.';try{const body=await error.context?.json();if(body?.error)detail=body.error;}catch{}throw new Error(detail);}
       if(!data?.reply)throw new Error(data?.error||'Resposta vazia. Tente novamente.');
       const cleanReply=humanOnly?data.reply.replace(/(?:^|\n)\s*(?:N[aã]o localizei|N[aã]o encontrei)[^\n]*DOCS[^\n]*/gi,'').trim():data.reply;
       wait.remove();addMessage('assistant',cleanReply,humanOnly?[]:(Array.isArray(data.docs)?data.docs:[]));
       history.push({role:'user',content:text},{role:'assistant',content:cleanReply});
     }catch(e){wait.remove();addMessage('assistant',e.message||'Erro ao consultar a IA.');}
-    finally{busy=false;send.disabled=false;input.disabled=false;input.focus();}
+    finally{if(serial===requestSerial){busy=false;send.disabled=false;send.removeAttribute('aria-busy');input.readOnly=false;input.focus();}}
   }
   form.addEventListener('submit',e=>{e.preventDefault();submit();});
   input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();submit();}});
@@ -68,4 +74,5 @@
   addEventListener('resize',()=>{if(win.style.left){const rect=win.getBoundingClientRect();place(rect.left,rect.top);}});
   try{const p=JSON.parse(localStorage.getItem('alcans-ai-position'));if(Number.isFinite(p?.x)&&Number.isFinite(p?.y))requestAnimationFrame(()=>place(p.x,p.y));}catch{}
   document.addEventListener('sac:ready',e=>{context=e.detail;});
+  context=window.SAC?.context||context;
 })();
