@@ -9,6 +9,38 @@
  const format=s=>s.match(/.{1,2}/g)?.join(":")||s;
  function getCache(){try{return JSON.parse(localStorage.getItem(STORE)||"{}")}catch{return {}}}
  function putCache(key,result){try{const cache=getCache();cache[key]={result,time:Date.now()};const keys=Object.keys(cache).sort((a,b)=>cache[a].time-cache[b].time);while(keys.length>LIMIT)delete cache[keys.shift()];localStorage.setItem(STORE,JSON.stringify(cache))}catch{}}
+ async function onlineLookup(key){
+   const endpoints=[
+     {name:"MACLookup",url:"https://api.maclookup.app/v2/macs/"+encodeURIComponent(key),json:true},
+     {name:"MacVendors",url:"https://api.macvendors.com/"+encodeURIComponent(key),json:false},
+     {name:"MacAdress",url:"https://api.macadress.com/v1/vendor/"+encodeURIComponent(key),json:false}
+   ];
+   let unavailable=0,notFound=0,rateLimited=0;
+   for(const endpoint of endpoints){
+     try{
+       const controller=new AbortController();
+       const timer=setTimeout(()=>controller.abort(),6500);
+       let response;
+       try{response=await fetch(endpoint.url,{signal:controller.signal,headers:{Accept:endpoint.json?"application/json":"text/plain"}})}
+       finally{clearTimeout(timer)}
+       if(response.status===404||response.status===204){notFound++;continue}
+       if(response.status===429){rateLimited++;continue}
+       if(!response.ok){unavailable++;continue}
+       let company="",country="",blockType="";
+       if(endpoint.json){
+         const data=await response.json();
+         if(data.found===false||data.success===false){notFound++;continue}
+         company=String(data.company||data.vendor||data.companyName||"").trim();
+         country=String(data.country||"").trim();
+         blockType=String(data.blockType||"").trim();
+       }else company=(await response.text()).trim();
+       if(!company||/^\*|not found|not available|invalid mac|unknown/i.test(company)){notFound++;continue}
+       return {data:{found:true,company,country,blockType,macPrefix:key.slice(0,6)},source:endpoint.name};
+     }catch{unavailable++}
+   }
+   if(notFound===endpoints.length)return {notFound:true};
+   throw Error(rateLimited===endpoints.length?"As fontes atingiram o limite de consultas.":"As fontes públicas não responderam ou bloquearam o acesso pelo navegador.");
+ }
  function mount(root,heading){
    heading("Consulta de MAC","Identifique o fabricante registrado de um endereço MAC ou prefixo OUI.");
    root.innerHTML=`<section class="tool-panel mac-panel">
@@ -27,24 +59,15 @@
      field.value=format(key);const cache=getCache()[key]||getCache()[key.slice(0,6)];
      submit.disabled=true;status.textContent="Consultando fabricante...";
      try{
-       // A API macadress publica Access-Control-Allow-Origin: * e pode ser usada no GitHub Pages.
-       const response=await fetch("https://api.macadress.com/v1/vendor/"+encodeURIComponent(key),{signal:AbortSignal.timeout(9000)});
-       if(response.status===404){
-         result.hidden=true;status.textContent="Prefixo não registrado ou endereço MAC local/aleatório. Nenhum fabricante público identificado.";return;
-       }
-       if(response.status===429)throw Error("Limite gratuito da API atingido. Tente novamente mais tarde.");
-       if(!response.ok)throw Error("Erro HTTP "+response.status+" ao consultar a API.");
-       const company=(await response.text()).trim();
-       if(!company||company.startsWith("*")){
-         result.hidden=true;status.textContent="Nenhum fabricante público encontrado.";return;
-       }
-       const data={found:true,company,macPrefix:key.slice(0,6)};
-       show(data,key,"Consulta online");putCache(key,data);
+       const online=await onlineLookup(key);
+       if(online.notFound){result.hidden=true;status.textContent="Nenhum fabricante público identificado para este MAC ou prefixo.";return}
+       show(online.data,key,"Consulta online · "+online.source);
+       putCache(key,online.data);
        status.textContent="Consulta concluída.";history();
      }catch(err){
        if(cache){show(cache.result,key,"Cache local");status.textContent="API indisponível. Resultado recuperado do histórico deste navegador."}
        else if(fallback[key.slice(0,6)]){const data={...fallback[key.slice(0,6)],found:true,macPrefix:key.slice(0,6)};show(data,key,"Base local de exemplo");status.textContent="API indisponível. Resultado da base local limitada."}
-       else{result.hidden=true;status.textContent="Consulta online indisponível: "+(err?.message||"falha de rede ou CORS")+". Nenhum resultado local para este prefixo."}
+       else{result.hidden=true;status.textContent="Consulta online indisponível: "+(err?.message||"falha de rede")+" Nenhum registro disponível no histórico local. Tente novamente mais tarde."}
      }finally{submit.disabled=false}
    };
    $("mac-clear").onclick=()=>{try{localStorage.removeItem(STORE)}catch{}history();status.textContent="Histórico local apagado."};
